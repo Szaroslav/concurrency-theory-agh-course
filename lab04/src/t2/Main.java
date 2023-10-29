@@ -1,14 +1,10 @@
 package t2;
 
-import java.util.concurrent.locks.ReentrantLock;
+import common.AbstractDiningPhilosophers;
+import common.AbstractPhilosopher;
+import common.Fork;
 
-class Fork extends ReentrantLock { }
-
-class Philosopher extends Thread {
-    private final int place;
-    private final Fork leftFork;
-    private final Fork rightFork;
-    private final int iterations;
+class Philosopher extends AbstractPhilosopher {
 
     public Philosopher(
             final int place,
@@ -16,29 +12,11 @@ class Philosopher extends Thread {
             final Fork rightFork,
             final int iterations
     ) {
-        this.place      = place;
-        this.leftFork   = leftFork;
-        this.rightFork  = rightFork;
-        this.iterations = iterations;
-    }
-
-    private void log(String message) {
-        System.out.printf("[Philosopher %d] %s%n", place, message);
+        super(place, leftFork, rightFork, iterations);
     }
 
     @Override
-    public void run() {
-        for (int i = 0; i < iterations; i++) {
-            think();
-            eat();
-        }
-    }
-
-    private void think() {
-        log("Ummmmmmmm…");
-    }
-
-    private void eat() {
+    protected void eat() {
         if (!leftFork.tryLock()) {
             return;
         }
@@ -52,21 +30,12 @@ class Philosopher extends Thread {
     }
 }
 
-class DiningPhilosophers {
-    private final int philosophersNumber;
-    private final int iterations;
-    private final Fork[] forks;
-
-    DiningPhilosophers(final int philosophersNumber, final int iterations) {
-        this.philosophersNumber = philosophersNumber;
-        this.iterations         = iterations;
-
-        forks = new Fork[philosophersNumber];
-        for (int i = 0; i < philosophersNumber; i++) {
-            forks[i] = new Fork();
-        }
+class DiningPhilosophers extends AbstractDiningPhilosophers {
+    public DiningPhilosophers(final int philosophersNumber, final int iterations) {
+        super(philosophersNumber, iterations);
     }
 
+    @Override
     public void simulate() {
         for (int i = 0; i < philosophersNumber; i++) {
             Philosopher philosopher = new Philosopher(
