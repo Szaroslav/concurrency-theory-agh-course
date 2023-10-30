@@ -21,13 +21,20 @@ class Philosopher extends AbstractPhilosopher {
 
     @Override
     protected void eat() {
-        if (!waiter.tryToGiveFork(this, leftFork))  return;
-        log("Taken left fork.");
-        leftFork.lock();
-        if (!waiter.tryToGiveFork(this, rightFork)) return;
-        log("Taken right fork.");
-        log("Eating…");
-        waiter.takeAwayDishes(new Fork[] { leftFork, rightFork });
+        try {
+            waiter.acquire();
+            synchronized (leftFork) {
+                log("Taken left fork.");
+                synchronized (rightFork) {
+                    log("Taken right fork.");
+                    log("Eating…");
+                    waiter.release();
+                }
+            }
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
@@ -36,7 +43,7 @@ class DiningPhilosophers extends AbstractDiningPhilosophers {
 
     public DiningPhilosophers(final int philosophersNumber, final int iterations) {
         super(philosophersNumber, iterations);
-        this.waiter = new Waiter(philosophersNumber);
+        this.waiter = new Waiter(philosophersNumber - 1, true);
     }
 
     @Override
