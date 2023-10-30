@@ -9,14 +9,14 @@ class Philosopher extends AbstractPhilosopher {
     private final Waiter waiter;
 
     public Philosopher(
-            final int place,
-            final Fork leftFork,
-            final Fork rightFork,
-            final int iterations,
-            final Waiter waiter
+        final int place,
+        final Fork leftFork,
+        final Fork rightFork,
+        final int iterations,
+        final Waiter waiter
     ) {
         super(place, leftFork, rightFork, iterations);
-        this.waiter     = waiter;
+        this.waiter = waiter;
     }
 
     @Override
