@@ -5,6 +5,7 @@ public abstract class AbstractPhilosopher extends Thread {
     protected final Fork leftFork;
     protected final Fork rightFork;
     protected final int iterations;
+    protected final PhilosopherStats stats = new PhilosopherStats();
 
     public AbstractPhilosopher(
             final int place,
