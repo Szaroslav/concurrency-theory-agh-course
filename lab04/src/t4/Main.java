@@ -47,7 +47,7 @@ class DiningPhilosophers extends AbstractDiningPhilosophers {
     }
 
     @Override
-    protected AbstractPhilosopher createPhilosopher(int i) {
+    protected AbstractPhilosopher createPhilosopher(final int i) {
         return new Philosopher(
             i,
             forks[i],
@@ -59,7 +59,10 @@ class DiningPhilosophers extends AbstractDiningPhilosophers {
 
 public class Main {
     public static void main(String[] args) {
-        DiningPhilosophers simulation = new DiningPhilosophers(10, 128);
-        simulation.simulate();
+        int[] philosopherNumberArray = { 2, 3, 4, 5, 8, 10, 16, 32, 64, 128 };
+        for (int philosophersNumber : philosopherNumberArray) {
+            DiningPhilosophers simulation = new DiningPhilosophers(philosophersNumber, 1024);
+            simulation.simulate();
+        }
     }
 }
