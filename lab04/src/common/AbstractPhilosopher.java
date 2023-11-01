@@ -23,10 +23,15 @@ public abstract class AbstractPhilosopher extends Thread {
         System.out.printf("[Philosopher %d] %s%n", place, message);
     }
 
+    public PhilosopherStats stats() {
+        return stats;
+    }
+
     @Override
     public void run() {
         for (int i = 0; i < iterations; i++) {
             think();
+            log(Integer.toString(i));
             eat();
         }
     }

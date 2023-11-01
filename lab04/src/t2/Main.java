@@ -38,16 +38,13 @@ class DiningPhilosophers extends AbstractDiningPhilosophers {
     }
 
     @Override
-    public void simulate() {
-        for (int i = 0; i < philosophersNumber; i++) {
-            Philosopher philosopher = new Philosopher(
-                i,
-                forks[i],
-                forks[(i + 1) % philosophersNumber],
-                iterations
-            );
-            philosopher.start();
-        }
+    protected AbstractPhilosopher createPhilosopher(int i) {
+        return new Philosopher(
+            i,
+            forks[i],
+            forks[(i + 1) % philosophersNumber],
+            iterations
+        );
     }
 }
 
