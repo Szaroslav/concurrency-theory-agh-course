@@ -1,8 +1,8 @@
 package common;
 
 public class PhilosopherStats {
-    private int sampleNumber            = 0;
-    private long totalMeasurementTimeMs = 0;
+    private int sampleNumber             = 0;
+    private long totalMeasurementTimeMcs = 0;
     private long startTimeMs;
     private long endTimeMs;
 
@@ -13,11 +13,13 @@ public class PhilosopherStats {
     public void endMeasurement() {
         endTimeMs = System.currentTimeMillis();
         sampleNumber++;
-        long sampleMeasurementTimeMs = endTimeMs - startTimeMs;
-        totalMeasurementTimeMs += sampleMeasurementTimeMs;
+        long sampleMeasurementTimeMcs = 1000 * (endTimeMs - startTimeMs);
+        totalMeasurementTimeMcs += sampleMeasurementTimeMcs;
     }
 
-    public long averageMeasurementTimeMs() {
-        return totalMeasurementTimeMs / sampleNumber;
+    public long averageMeasurementTimeMcs() {
+        if (sampleNumber == 0)
+            return 0;
+        return totalMeasurementTimeMcs / sampleNumber;
     }
 }

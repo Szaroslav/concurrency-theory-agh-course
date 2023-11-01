@@ -23,6 +23,10 @@ public abstract class AbstractPhilosopher extends Thread {
         System.out.printf("[Philosopher %d] %s%n", place, message);
     }
 
+    public int place() {
+        return place;
+    }
+
     public PhilosopherStats stats() {
         return stats;
     }
@@ -31,7 +35,6 @@ public abstract class AbstractPhilosopher extends Thread {
     public void run() {
         for (int i = 0; i < iterations; i++) {
             think();
-            log(Integer.toString(i));
             eat();
         }
     }

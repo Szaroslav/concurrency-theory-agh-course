@@ -1,9 +1,5 @@
 package common;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 public abstract class AbstractDiningPhilosophers {
     protected final int philosophersNumber;
     protected final int iterations;
@@ -22,22 +18,19 @@ public abstract class AbstractDiningPhilosophers {
     protected abstract AbstractPhilosopher createPhilosopher(int i);
 
     public void simulate() {
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        PhilosopherStats[] philosopherStats = new PhilosopherStats[philosophersNumber];
+        AbstractPhilosopher[] philosophers = new AbstractPhilosopher[philosophersNumber];
         for (int i = 0; i < philosophersNumber; i++) {
             AbstractPhilosopher philosopher = createPhilosopher(i);
-            philosopherStats[i] = philosopher.stats();
-            executorService.execute(philosopher);
+            philosophers[i] = philosopher;
+            philosopher.start();
         }
-        executorService.shutdown();
 
         try {
-            executorService.awaitTermination(5, TimeUnit.SECONDS);
-            for (int i = 0; i < philosophersNumber; i++) {
-                System.out.println(philosopherStats[i].averageMeasurementTimeMs());
+            for (AbstractPhilosopher philosopher : philosophers) {
+                philosopher.join();
+                System.out.printf("%d,%d%n", philosopher.place(), philosopher.stats().averageMeasurementTimeMcs());
             }
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
