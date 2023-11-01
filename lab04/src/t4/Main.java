@@ -43,7 +43,7 @@ class Philosopher extends AbstractPhilosopher {
 
 class DiningPhilosophers extends AbstractDiningPhilosophers {
     public DiningPhilosophers(final int philosophersNumber, final int iterations) {
-        super(philosophersNumber, iterations);
+        super("t4", philosophersNumber, iterations);
     }
 
     @Override

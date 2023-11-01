@@ -58,7 +58,7 @@ class DiningPhilosophers extends AbstractDiningPhilosophers {
     private final Waiter waiter;
 
     public DiningPhilosophers(final int philosophersNumber, final int iterations) {
-        super(philosophersNumber, iterations);
+        super("t6", philosophersNumber, iterations);
         this.waiter = new Waiter(philosophersNumber - 1, true);
     }
 
