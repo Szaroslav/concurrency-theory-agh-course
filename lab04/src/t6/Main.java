@@ -24,10 +24,12 @@ class Philosopher extends AbstractPhilosopher {
     @Override
     protected void eat() {
         try {
+            stats.startMeasurement();
             if (!waiter.tryAcquire(0, TimeUnit.SECONDS)) {
                 synchronized (rightFork) {
                     log("Taken right fork.");
                     synchronized (leftFork) {
+                        stats.endMeasurement();
                         log("Taken right fork.");
                         log("Eating…");
                         waiter.release();
@@ -38,6 +40,7 @@ class Philosopher extends AbstractPhilosopher {
                 synchronized (leftFork) {
                     log("Taken left fork.");
                     synchronized (leftFork) {
+                        stats.endMeasurement();
                         log("Taken right fork.");
                         log("Eating…");
                         waiter.release();

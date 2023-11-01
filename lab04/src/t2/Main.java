@@ -17,6 +17,7 @@ class Philosopher extends AbstractPhilosopher {
 
     @Override
     protected void eat() {
+        stats.startMeasurement();
         if (!leftFork.tryLock()) {
             return;
         }
@@ -24,6 +25,7 @@ class Philosopher extends AbstractPhilosopher {
             leftFork.unlock();
             return;
         }
+        stats.endMeasurement();
 
         log("Taken right and left fork.");
         log("Eating…");

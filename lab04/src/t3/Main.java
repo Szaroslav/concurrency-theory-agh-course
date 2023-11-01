@@ -16,10 +16,12 @@ class Philosopher extends AbstractPhilosopher {
 
     @Override
     protected void eat() {
+        stats.startMeasurement();
         if (place % 2 == 1) {
             synchronized (rightFork) {
                 log("Taken right fork.");
                 synchronized (leftFork) {
+                    stats.endMeasurement();
                     log("Taken left fork.");
                 }
             }
@@ -28,7 +30,9 @@ class Philosopher extends AbstractPhilosopher {
             synchronized (leftFork) {
                 log("Taken left fork.");
                 synchronized (rightFork) {
+                    stats.endMeasurement();
                     log("Taken right fork.");
+                    log("Eating…");
                 }
             }
         }

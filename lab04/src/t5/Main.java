@@ -22,10 +22,12 @@ class Philosopher extends AbstractPhilosopher {
     @Override
     protected void eat() {
         try {
+            stats.startMeasurement();
             waiter.acquire();
             synchronized (leftFork) {
                 log("Taken left fork.");
                 synchronized (rightFork) {
+                    stats.endMeasurement();
                     log("Taken right fork.");
                     log("Eating…");
                     waiter.release();
