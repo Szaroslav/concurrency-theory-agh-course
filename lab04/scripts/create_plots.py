@@ -12,6 +12,7 @@ if __name__ == "__main__":
 
       filename_without_extension = entry.name[:-4]
       splitted_filename = filename_without_extension.split("-")
+      task_name = splitted_filename[0]
       number_of_philosophers = int(splitted_filename[1])
       results_per_philosopher = [[] for _ in range(number_of_philosophers)]
 
@@ -21,5 +22,17 @@ if __name__ == "__main__":
           philosopher_index = int(splitted_line[0])
           waiting_time_avg_mcs = int(splitted_line[1])
           results_per_philosopher[philosopher_index].append(waiting_time_avg_mcs)
-      plt.boxplot(results_per_philosopher)
-      plt.show()
+
+      if number_of_philosophers > 64:
+        continue
+
+      fig, ax = plt.subplots(figsize=(16, 5))
+      ax.set_title(f"{task_name.upper()}, liczba filozofów: {number_of_philosophers}")
+      ax.yaxis.grid(True)
+      box_plot = ax.boxplot(results_per_philosopher, patch_artist=True)
+      for box in box_plot["boxes"]:
+        box.set_facecolor("grey")
+      for median in box_plot["medians"]:
+        median.set_color("pink")
+      fig.savefig(os.path.join(script_path, "../results", f"{filename_without_extension}.png"))
+      plt.close()
