@@ -17,18 +17,23 @@ class Philosopher extends AbstractPhilosopher {
 
     @Override
     protected void eat() {
-        stats.startMeasurement();
-        if (!leftFork.tryLock()) {
-            return;
-        }
-        if (!rightFork.tryLock()) {
-            leftFork.unlock();
-            return;
+        while (true) {
+            if (!leftFork.tryLock()) {
+                continue;
+            }
+            if (!rightFork.tryLock()) {
+                leftFork.unlock();
+                continue;
+            }
+            break;
         }
         stats.endMeasurement();
 
         log("Taken right and left fork.");
         log("Eating…");
+
+        leftFork.unlock();
+        rightFork.unlock();
     }
 }
 

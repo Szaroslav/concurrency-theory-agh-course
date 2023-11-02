@@ -18,7 +18,6 @@ class Philosopher extends AbstractPhilosopher {
 
     @Override
     protected void eat() {
-        stats.startMeasurement();
         if (ThreadLocalRandom.current().nextBoolean()) {
             synchronized (rightFork) {
                 log("Taken right fork.");

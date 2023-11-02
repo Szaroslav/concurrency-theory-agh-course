@@ -16,7 +16,6 @@ class Philosopher extends AbstractPhilosopher {
 
     @Override
     protected void eat() {
-        stats.startMeasurement();
         synchronized (leftFork) {
             log("Taken left fork.");
             synchronized (rightFork) {

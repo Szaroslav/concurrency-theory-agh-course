@@ -35,6 +35,7 @@ public abstract class AbstractPhilosopher extends Thread {
     public void run() {
         for (int i = 0; i < iterations; i++) {
             think();
+            stats.startMeasurement();
             eat();
         }
     }
