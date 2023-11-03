@@ -28,6 +28,8 @@ if __name__ == "__main__":
 
       fig, ax = plt.subplots(figsize=(16, 5))
       ax.set_title(f"{task_name.upper()}, liczba filozofów: {number_of_philosophers}")
+      ax.set_ylabel("Średni czas oczekiwania [μs]")
+      ax.set_xlabel("Filozof")
       ax.yaxis.grid(True)
       box_plot = ax.boxplot(results_per_philosopher, patch_artist=True)
       for box in box_plot["boxes"]:
