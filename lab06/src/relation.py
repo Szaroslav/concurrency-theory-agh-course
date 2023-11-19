@@ -72,7 +72,8 @@ class DependencyWordRelation(AbstractRelation):
   set_symbol = "DW"
 
   def __init__(
-      self, word: list[int],
+      self,
+      word: list[int],
       dependency_relation: DependencyRelation,
       **kwargs: dict[str, any]
   ) -> None:
