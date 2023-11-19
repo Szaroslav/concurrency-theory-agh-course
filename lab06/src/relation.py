@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-import string
-
+import networkx as nx
 
 class AbstractRelation(ABC):
   set_symbol = "AR"
@@ -72,19 +71,42 @@ class IndependencyRelation(AbstractRelation):
 class DependencyWordRelation(AbstractRelation):
   set_symbol = "DW"
 
-  def __init__(self, word: list[int], dependency_relation: DependencyRelation) -> None:
+  def __init__(
+      self, word: list[int],
+      dependency_relation: DependencyRelation,
+      **kwargs: dict[str, any]
+  ) -> None:
     super().__init__(dependency_relation.expressions, dependency_relation.alphabet)
     self.word                = word
     self.dependency_relation = dependency_relation
     self.results: list[list[int]] | None = None
+
+    self.minimal = kwargs.get("minimal", False)
+
+  # Override
+  def __str__(self) -> str:
+    return self.set_symbol
 
   # Override
   def build(self) -> None:
     if not self.dependency_relation:
       raise ValueError("Dependency relation is not builded.")
 
-    self.results = [[] for _ in self.dependency_relation.alphabet]
+    self.results = [[] for _ in self.word]
     for i, letter in enumerate(self.word):
       for j in range(i + 1, len(self.word)):
         if self.word[j] in self.dependency_relation.results[letter]:
-          self.results[letter].append(self.word[j])
+          self.results[i].append(j)
+
+    if self.minimal:
+      edge_list: list[tuple[int, int]] = []
+      for u in range(len(self.word)):
+        for v in self.results[u]:
+          edge_list.append((u, v))
+
+      digraph = nx.DiGraph(edge_list)
+      reduced_digraph = nx.transitive_reduction(digraph)
+
+      self.results = [[] for _ in self.word]
+      for u, v in reduced_digraph.edges:
+        self.results[u].append(v)

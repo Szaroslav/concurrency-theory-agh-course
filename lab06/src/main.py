@@ -1,6 +1,7 @@
 import os
 from file_reader import FileReader
 from relation import DependencyRelation, IndependencyRelation, DependencyWordRelation
+from normal_form import FoataNF
 
 
 if __name__ == "__main__":
@@ -22,6 +23,10 @@ if __name__ == "__main__":
     independency_relation.build()
     print(independency_relation)
 
-    dependency_word_relation = DependencyWordRelation(word_int, dependency_relation)
-    dependency_word_relation.build()
-    print(dependency_word_relation)
+    dependency_relation_word = DependencyWordRelation(word_int, dependency_relation, minimal=True)
+    dependency_relation_word.build()
+    print(dependency_relation_word)
+
+    foata_normal_form = FoataNF(word_int, dependency_relation_word)
+    foata_normal_form.build()
+    print(foata_normal_form)
