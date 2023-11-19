@@ -1,6 +1,6 @@
 import os
 from file_reader import FileReader
-from relation import DependencyRelation, IndependencyRelation
+from relation import DependencyRelation, IndependencyRelation, DependencyWordRelation
 
 
 if __name__ == "__main__":
@@ -11,10 +11,17 @@ if __name__ == "__main__":
   for test_fn in TEST_FILENAMES:
     print(test_fn)
     alphabet, word, expressions = FileReader.read(f"{DATA_PATH}/{test_fn}")
-    print(alphabet, word, expressions)
+    word_int = list(map(lambda letter: ord(letter) - ord('a'), word))
+    print(alphabet, word, word_int, expressions)
+
     dependency_relation = DependencyRelation(expressions, alphabet)
     dependency_relation.build()
     print(dependency_relation)
+
     independency_relation = IndependencyRelation(expressions, alphabet)
     independency_relation.build()
     print(independency_relation)
+
+    dependency_word_relation = DependencyWordRelation(word_int, dependency_relation)
+    dependency_word_relation.build()
+    print(dependency_word_relation)

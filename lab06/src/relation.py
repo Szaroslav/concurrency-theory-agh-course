@@ -8,7 +8,10 @@ class AbstractRelation(ABC):
   def __init__(self, expressions: list[tuple[str, list[str]]], alphabet: list[str]) -> None:
     self.expressions = expressions
     self.alphabet    = alphabet
-    self.results: list[tuple[str, str]] | None = None
+    self.results: list[list[int]] | None = None
+
+  def __bool__(self) -> bool:
+    return self.results != None
 
   def __str__(self) -> str:
     relation_set = f"{self.set_symbol} = {{%s}}"
@@ -16,10 +19,15 @@ class AbstractRelation(ABC):
     if not self.results or len(self.results) == 0:
       return relation_set % " "
 
-    formatted_results = list(map(lambda x: f"({x[0]}, {x[1]})", self.results))
+    formatted_results: list[str] = []
+    for i in range(len(self.alphabet)):
+      for j in self.results[i]:
+        i_str, j_str = self.__create_tuple_of_expressions(i, j)
+        formatted_results.append(f"({i_str}, {j_str})")
+
     return relation_set % f" {', '.join(formatted_results)} "
 
-  def _create_tuple_of_expressions(self, i: int, j: int) -> tuple[str, str]:
+  def __create_tuple_of_expressions(self, i: int, j: int) -> tuple[str, str]:
     return self.alphabet[i], self.alphabet[j]
 
   @abstractmethod
@@ -32,7 +40,7 @@ class DependencyRelation(AbstractRelation):
 
   # Override
   def build(self) -> None:
-    self.results = []
+    self.results = [[] for _ in self.alphabet]
     expressions_enumerate_list = list(enumerate(self.expressions))
     for i, (assigned_var, operating_vars) in expressions_enumerate_list:
       for j, (assigned_var_inner, operating_vars_inner) in expressions_enumerate_list:
@@ -41,7 +49,7 @@ class DependencyRelation(AbstractRelation):
           or assigned_var in operating_vars_inner
           or assigned_var_inner in operating_vars
         ):
-          self.results.append(self._create_tuple_of_expressions(i, j))
+          self.results[i].append(j)
 
 
 class IndependencyRelation(AbstractRelation):
@@ -49,7 +57,7 @@ class IndependencyRelation(AbstractRelation):
 
   # Override
   def build(self) -> None:
-    self.results = []
+    self.results = [[] for _ in self.alphabet]
     expressions_enumerate_list = list(enumerate(self.expressions))
     for i, (assigned_var, operating_vars) in expressions_enumerate_list:
       for j, (assigned_var_inner, operating_vars_inner) in expressions_enumerate_list:
@@ -58,4 +66,25 @@ class IndependencyRelation(AbstractRelation):
           or assigned_var in operating_vars_inner
           or assigned_var_inner in operating_vars
         ):
-          self.results.append(self._create_tuple_of_expressions(i, j))
+          self.results[i].append(j)
+
+
+class DependencyWordRelation(AbstractRelation):
+  set_symbol = "DW"
+
+  def __init__(self, word: list[int], dependency_relation: DependencyRelation) -> None:
+    super().__init__(dependency_relation.expressions, dependency_relation.alphabet)
+    self.word                = word
+    self.dependency_relation = dependency_relation
+    self.results: list[list[int]] | None = None
+
+  # Override
+  def build(self) -> None:
+    if not self.dependency_relation:
+      raise ValueError("Dependency relation is not builded.")
+
+    self.results = [[] for _ in self.dependency_relation.alphabet]
+    for i, letter in enumerate(self.word):
+      for j in range(i + 1, len(self.word)):
+        if self.word[j] in self.dependency_relation.results[letter]:
+          self.results[letter].append(self.word[j])
