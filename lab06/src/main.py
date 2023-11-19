@@ -13,7 +13,6 @@ if __name__ == "__main__":
     print(test_fn)
     alphabet, word, expressions = FileReader.read(f"{DATA_PATH}/{test_fn}")
     word_int = list(map(lambda letter: ord(letter) - ord('a'), word))
-    print(alphabet, word, word_int, expressions)
 
     dependency_relation = DependencyRelation(expressions, alphabet)
     dependency_relation.build()
@@ -25,8 +24,7 @@ if __name__ == "__main__":
 
     dependency_relation_word = DependencyWordRelation(word_int, dependency_relation, minimal=True)
     dependency_relation_word.build()
-    print(dependency_relation_word)
 
-    foata_normal_form = FoataNF(word_int, dependency_relation_word)
+    foata_normal_form = FoataNF(word_int, dependency_relation, independency_relation)
     foata_normal_form.build()
-    print(foata_normal_form)
+    print(f"FNF: {foata_normal_form}")
