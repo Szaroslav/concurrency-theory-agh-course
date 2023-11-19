@@ -1,6 +1,9 @@
 from relation import DependencyRelation, IndependencyRelation
 
-
+"""
+Uses algorithm from chapter _2.4. a simple algorithm to compute normal forms_
+from "Partial Commutation and Traces" by V. Diekert and Yves Metivier.
+"""
 class FoataNF:
   def __init__(
       self,
@@ -21,8 +24,8 @@ class FoataNF:
 
   def build(self) -> None:
     stacks: list[list[int | None]] = [[] for _ in self.dependency_relation.alphabet]
-    alphabet = self.dependency_relation.alphabet
 
+    # Build stacks of input alphabet.
     for letter_word in reversed(self.word):
       stacks[letter_word].append(letter_word)
       dependent_letters = self.__get_dependent_letters(letter_word)
@@ -31,15 +34,18 @@ class FoataNF:
           continue
         stacks[dependent_letter].append(None)
 
+    # Evaluate Foata normal from.
     self.results = []
     while not self.__are_stacks_empty(stacks):
       self.results.append([])
+      # Letters to pop from top of the stacks.
       letters_to_pop = list(
         map(
           lambda stack: stack[-1],
           filter(lambda stack: len(stack) > 0 and stack[-1] is not None, stacks)
         )
       )
+      # Pop desired letters and "stones", which are dependent with them.
       for letter_pop in letters_to_pop:
         self.results[-1].append(stacks[letter_pop].pop())
         dependent_letters = self.__get_dependent_letters(letter_pop)

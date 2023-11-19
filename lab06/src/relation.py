@@ -67,7 +67,9 @@ class IndependencyRelation(AbstractRelation):
         ):
           self.results[i].append(j)
 
-
+"""
+Uses NetworkX library to create minimal directed graph.
+"""
 class DependencyWordRelation(AbstractRelation):
   set_symbol = "DW"
 
@@ -93,6 +95,7 @@ class DependencyWordRelation(AbstractRelation):
     if not self.dependency_relation:
       raise ValueError("Dependency relation is not builded.")
 
+    # Create full directed acyclic relation graph of the input word.
     self.results = [[] for _ in self.word]
     for i, letter in enumerate(self.word):
       for j in range(i + 1, len(self.word)):
@@ -100,6 +103,7 @@ class DependencyWordRelation(AbstractRelation):
           self.results[i].append(j)
 
     if self.minimal:
+      # Reduce the graph.
       edge_list: list[tuple[int, int]] = []
       for u in range(len(self.word)):
         for v in self.results[u]:
