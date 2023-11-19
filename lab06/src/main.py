@@ -1,5 +1,6 @@
 import os
 from file_reader import FileReader
+from relation import DependencyRelation
 
 
 if __name__ == "__main__":
@@ -9,4 +10,8 @@ if __name__ == "__main__":
 
   for test_fn in TEST_FILENAMES:
     print(test_fn)
-    print(FileReader.read(f"{DATA_PATH}/{test_fn}"))
+    alphabet, word, expressions = FileReader.read(f"{DATA_PATH}/{test_fn}")
+    print(alphabet, word, expressions)
+    dependency_relation = DependencyRelation(expressions, alphabet)
+    dependency_relation.build()
+    print(dependency_relation)

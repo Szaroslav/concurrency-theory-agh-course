@@ -4,7 +4,7 @@ from parser import InputParser
 
 class FileReader:
   @classmethod
-  def read(cls, path: str) -> tuple[list[str], list[str], list[str]]:
+  def read(cls, path: str) -> tuple[list[str], list[str], tuple[str, list[str]]]:
     if not os.path.exists(path) or not os.path.isfile(path):
       raise ValueError("File not found.")
 
@@ -12,7 +12,7 @@ class FileReader:
       alphabet = cls.__clean_line(file.readline()).split(',')
       word     = cls.__clean_line(file.readline()).split(',')
 
-      expressions: list[str] = []
+      expressions: tuple[str, list[str]] = []
       for line in file:
         expressions.append(InputParser.parse_line(line))
 

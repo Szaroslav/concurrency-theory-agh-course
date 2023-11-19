@@ -4,5 +4,5 @@ x := x + 1
 y := y + 2z
 x := 3x + z
 w := w + v
-z := y − z
+z := y - z
 v := x + v
