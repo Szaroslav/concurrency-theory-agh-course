@@ -1,6 +1,6 @@
 import os
 from file_reader import FileReader
-from relation import DependencyRelation
+from relation import DependencyRelation, IndependencyRelation
 
 
 if __name__ == "__main__":
@@ -15,3 +15,6 @@ if __name__ == "__main__":
     dependency_relation = DependencyRelation(expressions, alphabet)
     dependency_relation.build()
     print(dependency_relation)
+    independency_relation = IndependencyRelation(expressions, alphabet)
+    independency_relation.build()
+    print(independency_relation)
