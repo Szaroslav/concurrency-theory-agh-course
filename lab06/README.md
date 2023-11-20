@@ -1,13 +1,24 @@
 # Trace theory
 Home assignment
 
+## How to run
+1. Be in the root directory (`lab06`).
+2. Run*:
+  ```bash
+  ./run.sh
+  ```
+  _*If you cannot run the script, grant an execution permission:_
+  ```bash
+  chmod +x ./run.sh
+  ```
+
 ## Description
 This project demonstrates, how concurrent tasks may be grouped by and run on different threads to achive better performance. **It only visualizes the method, doesn't implement it by running something concurrently**.
 
 The program can be specified in 5 major steps (in chronological order):
 - Creation of dependency relation ($D$).
 - Creation of independency relation ($I$).
-- Creation of minimal dependency relation of input word $DW$.
+- Creation of minimal dependency relation $DW$ of input word.
 - Computation Foata normal form (FNF) of $DW$.
 - Visualization of $DW$.
 
@@ -99,6 +110,7 @@ class AbstractRelation(ABC):
 ```
 
 #### Creation of dependency relation ($D$)
+Build adjacency list of expressions of dependency relation $D$, which are represented by integer values (a = 0, b = 1, ...).
 ##### `main.py`
 ```py
   # Create and print dependency relation (D).
@@ -127,6 +139,7 @@ class DependencyRelation(AbstractRelation):
 ```
 
 #### Creation of independency relation ($I$)
+Build adjacency list of expressions of independency relation $I$, which are represented by integer values as well. Expression $e$ is independent, if and only if is not dependent ($e \notin D$). More clearly, just need to negate above if condition.
 ##### `main.py`
 ```py
   # Create and print independency relation (I).
@@ -154,7 +167,9 @@ class IndependencyRelation(AbstractRelation):
           self.results[i].append(j)
 ```
 
-#### Creation of minimal dependency relation of input word $DW$
+#### Creation of minimal dependency relation $DW$ of input word
+Build adjacency list of letters (integers) of minimal dependency relation $DW$ of input word. Directed acyclic graph, which is formed may be in 2 shapes: full and minimal. It uses dependency relation $I$ to create a full graph, remembering about potential cycles and moving forward every iteration by 1 to avoid creating bidirectional edges. Then, if user wants to, reduces the full graph using `NetworkX` library.
+
 ##### `main.py`
 ```py
   # Create minimal dependency relation of the input word. 
@@ -215,6 +230,8 @@ class DependencyWordRelation(AbstractRelation):
 ```
 
 #### Computation Foata normal form (FNF) of $DW$
+Uses algorithm from chapter _2.4. a simple algorithm to compute normal forms_ from __"Partial Commutation and Traces"__ by V. Diekert and Yves Metivier. The algorithm consists of creating stack for every letter of alphabet, using the prevously computated dependency relation $DW$ of the word. From right to left fills appropriate stacks with letters of word $l$, next fills with empty markers every stack, which letter $l$ is dependent with (different than $l$). Repeat until stacks are not empty.
+
 ##### `main.py`
 ```py
   # Create and print Foata normal form based on the input word.
