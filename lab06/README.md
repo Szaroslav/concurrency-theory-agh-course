@@ -324,3 +324,77 @@ class GraphDrawer:
 
     digraph_dot.render(file, format="png", overwrite_source=True)
 ```
+
+## Tests
+
+### Test 1
+#### Input
+- Alphabet: $A_1 = \{ a, b, c, d \}$
+- Word: $w_1 = baadcb$
+- Expression / transactions:
+  1. $x := x + y$
+  1. $y := y + 2z$
+  1. $x := 3x + z$
+  1. $z := y - z$
+
+#### Output
+- Dependency relation: $D = { (a, a), (a, b), (a, c), (b, a), (b, b), (b, d), (c, a), (c, c), (c, d), (d, b), (d, c), (d, d) }$
+- Independency relation: $I = { (a, d), (b, c), (c, b), (d, a) }$
+- Foata normal form (FNF): $(b)(ad)(a)(bc)$
+- Digraph of $DW$ with source code (DOT Language):
+  ![Test 1 - digraph](./output/test1.gv.png)
+  ```
+  digraph "Hesse diagram" {
+          0 [label=b]
+          1 [label=a]
+          2 [label=a]
+          3 [label=d]
+          4 [label=c]
+          5 [label=b]
+          0 -> 1
+          0 -> 3
+          1 -> 2
+          2 -> 4
+          2 -> 5
+          3 -> 4
+          3 -> 5
+  }
+  ```
+
+### Test 2
+#### Input
+- Alphabet: $A_2 = \{ a, b, c, d, e, f \}$
+- Word: $w_2 = acdcfbbe$
+- Expression / transactions:
+  1. $x := x + 1$
+  1. $y := y + 2z$
+  1. $x := 3x + z$
+  1. $w := w + v$
+  1. $z := y - z$
+  1. $v := x + v$
+
+#### Output
+- Dependency relation: $D = { (a, a), (a, c), (a, f), (b, b), (b, e), (c, a), (c, c), (c, e), (c, f), (d, d), (d, f), (e, b), (e, c), (e, e), (f, a), (f, c), (f, d), (f, f) }$
+- Independency relation: $I = { (a, b), (a, d), (a, e), (b, a), (b, c), (b, d), (b, f), (c, b), (c, d), (d, a), (d, b), (d, c), (d, e), (e, a), (e, d), (e, f), (f, b), (f, e) }$
+- Foata normal form (FNF): $(abd)(bc)(c)(ef)$
+- Digraph of $DW$ with source code (DOT Language):
+  ![Test 2 - digraph](./output/test2.gv.png)
+  ```
+  digraph "Hesse diagram" {
+          0 [label=a]
+          1 [label=c]
+          2 [label=d]
+          3 [label=c]
+          4 [label=f]
+          5 [label=b]
+          6 [label=b]
+          7 [label=e]
+          0 -> 1
+          1 -> 3
+          2 -> 4
+          3 -> 4
+          3 -> 7
+          5 -> 6
+          6 -> 7
+  }
+  ```
