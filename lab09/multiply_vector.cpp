@@ -13,11 +13,9 @@ double * multiply_scalar(double *vector, const double scalar) {
   const int N = sizeof(vector) / sizeof(double);
 
   #pragma omp parallel for
-  {
     for (int i = 0; i < N; i++) {
       vector[i] *= scalar;
     }
-  }
 
   return vector;
 }
@@ -32,12 +30,10 @@ double multiply_vector(const double *vector1, const double *vector2) {
 
   double result;
 
-  #pragma omp parallel for
-  {
+  #pragma omp parallel for shared(result)
     for (int i = 0; i < N; i++) {
       result += vector1[i] * vector2[i];
     }
-  }
 
   return result;
 }
