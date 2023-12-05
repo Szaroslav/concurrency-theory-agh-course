@@ -32,13 +32,16 @@ int mm(double * first, double * second, double * multiply)
   register unsigned int i,j,k;
   double sum = 0;
 
-  for (i = 0; i < SIZE; i++) { //rows in multiply
-    for (j = 0; j < SIZE; j++) { //columns in multiply
-      sum = 0;
-      for (k = 0; k < SIZE; k++) { //columns in first and rows in second
-            sum = sum + _first_(i,k)*_second_(k,j);
-          }
-      _multiply_(i,j) = sum;
+  #pragma omp parallel for collapse(2)
+  {
+    for (i = 0; i < SIZE; i++) { //rows in multiply
+      for (j = 0; j < SIZE; j++) { //columns in multiply
+        sum = 0;
+        for (k = 0; k < SIZE; k++) { //columns in first and rows in second
+          sum = sum + _first_(i,k)*_second_(k,j);
+        }
+        _multiply_(i,j) = sum;
+      }
     }
   }
   return 0;
