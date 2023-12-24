@@ -18,9 +18,9 @@ class FoataNF:
 
   def __str__(self) -> str:
     return "".join(map(self.__group_letters, self.results))
-  
+
   def __group_letters(self, letters: list[int]) -> str:
-    return f"({''.join(map(lambda letter: self.dependency_relation.alphabet[letter], letters))})"
+    return f"({';'.join(map(lambda letter: self.dependency_relation.alphabet[letter], letters))})"
 
   def build(self) -> None:
     stacks: list[list[int | None]] = [[] for _ in self.dependency_relation.alphabet]
@@ -55,7 +55,7 @@ class FoataNF:
           stacks[dependent_letter].pop()
 
   def __get_dependent_letters(self, letter: int) -> list[int]:
-    return self.dependency_relation.results[letter]
+    return self.dependency_relation.result[letter]
 
   @staticmethod
   def __are_stacks_empty(stacks: list[list[int | None]]) -> bool:

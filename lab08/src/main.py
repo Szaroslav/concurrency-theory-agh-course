@@ -38,19 +38,16 @@ if __name__ == "__main__":
   # drawer = GraphDrawer(dependency_relation.result, alphabet)
   # drawer.draw(os.path.join(PATH_OUTPUT, f"{test_filename}.gv"))
 
-  # # Create and print independency relation (I).
-  # independency_relation = IndependencyRelation(expressions, alphabet)
-  # independency_relation.build()
-  # print(independency_relation)
+  # Create and print independency relation (I).
+  independency_relation = IndependencyRelation(alphabet, dependency_relation)
+  independency_relation.build()
+  print(independency_relation)
 
-  # # Create minimal dependency relation of the input word.
-  # dependency_relation_word = DependencyWordRelation(word_int, dependency_relation, minimal=True)
-  # dependency_relation_word.build()
-
-  # # Create and print Foata normal form based on the input word.
-  # foata_normal_form = FoataNF(word_int, dependency_relation, independency_relation)
-  # foata_normal_form.build()
-  # print(f"FNF: {foata_normal_form}")
+  # Create and print Foata normal form based on the input word.
+  all_symbols = [i for i in range(len(alphabet.symbols))]
+  foata_normal_form = FoataNF(all_symbols, dependency_relation, independency_relation)
+  foata_normal_form.build()
+  print(f"FNF: {foata_normal_form}")
 
   # # Visualize results.
   # drawer = GraphDrawer(dependency_relation_word.results, word)
