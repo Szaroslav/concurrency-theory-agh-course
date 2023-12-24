@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class MatrixAlphabet:
   def __init__(self, N: int) -> None:
     self.N = N
