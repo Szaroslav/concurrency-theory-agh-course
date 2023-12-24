@@ -76,3 +76,26 @@ class DependencyRelation(AbstractRelation):
             self.result[idx].append(self.alphabet.get_index_by_symbol(f"B_({i + 1},{j},{k + 1})"))
           if i + 1 < k:
             self.result[idx].append(self.alphabet.get_index_by_symbol(f"C_({i + 1},{j},{k})"))
+
+
+class IndependencyRelation(AbstractRelation):
+  set_symbol = "I"
+
+  def __init__(self, alphabet: MatrixAlphabet, dependency_relation: DependencyRelation) -> None:
+    super().__init__(alphabet)
+    self.dependency_relation = dependency_relation
+
+  # Override
+  def build(self) -> None:
+    n = len(self.alphabet.symbols)
+    self.result = [
+      [i for i in range(n)]
+      for _ in range(n)
+    ]
+
+    for i in range(n):
+      for relation in self.dependency_relation.result[i]:
+        try:
+          self.result[i].remove(relation)
+        except:
+          pass
