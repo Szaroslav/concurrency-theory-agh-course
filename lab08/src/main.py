@@ -34,9 +34,10 @@ if __name__ == "__main__":
   dependency_relation.build()
   print(dependency_relation)
 
-  # # Visualize results.
-  # drawer = GraphDrawer(dependency_relation.result, alphabet)
-  # drawer.draw(os.path.join(PATH_OUTPUT, f"{test_filename}.gv"))
+  # Visualize results.
+  drawer = GraphDrawer(dependency_relation.result, alphabet)
+  drawer.draw(os.path.join(PATH_OUTPUT, f"{test_filename}.gv"))
+  drawer.draw(os.path.join(PATH_OUTPUT, f"{test_filename}_loop.gv"), self_loop=True)
 
   # Create and print independency relation (I).
   independency_relation = IndependencyRelation(alphabet, dependency_relation)
@@ -48,7 +49,3 @@ if __name__ == "__main__":
   foata_normal_form = FoataNF(all_symbols, dependency_relation, independency_relation)
   foata_normal_form.build()
   print(f"FNF: {foata_normal_form}")
-
-  # # Visualize results.
-  # drawer = GraphDrawer(dependency_relation_word.results, word)
-  # drawer.draw(os.path.join(PATH_OUTPUT, f"{test_filename}.gv"))
