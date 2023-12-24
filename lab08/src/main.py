@@ -2,7 +2,7 @@ import os
 import sys
 from alphabet import MatrixAlphabet
 from file_reader import FileReader
-from relation import DependencyRelation, IndependencyRelation, DependencyWordRelation
+from relation import DependencyRelation, IndependencyRelation
 from normal_form import FoataNF
 from drawer import GraphDrawer
 
@@ -21,17 +21,22 @@ if __name__ == "__main__":
 
   alphabet = MatrixAlphabet(3)
   alphabet.build()
-  print(alphabet)
+  print(alphabet[18])
+  # print(alphabet)
 
   # # Read input file, first line is an alphabet, second one a word, rest are expressions.
   # # The word is also converted to integer list.
   # alphabet, word, expressions = FileReader.read(os.path.join(PATH_DATA, f"{test_filename}.txt"))
   # word_int = list(map(lambda letter: ord(letter) - ord('a'), word))
 
-  # # Create and print dependency relation (D).
-  # dependency_relation = DependencyRelation(expressions, alphabet)
-  # dependency_relation.build()
-  # print(dependency_relation)
+  # Create and print dependency relation (D).
+  dependency_relation = DependencyRelation(alphabet)
+  dependency_relation.build()
+  print(dependency_relation)
+
+  # # Visualize results.
+  # drawer = GraphDrawer(dependency_relation.result, alphabet)
+  # drawer.draw(os.path.join(PATH_OUTPUT, f"{test_filename}.gv"))
 
   # # Create and print independency relation (I).
   # independency_relation = IndependencyRelation(expressions, alphabet)
