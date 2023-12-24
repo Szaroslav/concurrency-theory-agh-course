@@ -24,11 +24,11 @@ class MatrixAlphabet:
   def build(self) -> None:
     for i in range(1, self.N):
       for k in range(i + 1, self.N + 1):
-        self.__append(f"A_({i},{k})")
+        self.__append(f"A{i},{k}")
         for j in range(i, self.N + 2):
-          self.__append(f"B_({i},{j},{k})")
+          self.__append(f"B{i},{j},{k}")
         for j in range(i, self.N + 2):
-          self.__append(f"C_({i},{j},{k})")
+          self.__append(f"C{i},{j},{k}")
 
     self.built = True
 

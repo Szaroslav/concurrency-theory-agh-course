@@ -64,18 +64,18 @@ class DependencyRelation(AbstractRelation):
 
       if symbol_type == 'A':
         if i > 1:
-          self.result[self.alphabet.get_index_by_symbol(f"C_({i - 1},{i},{i})")]    .append(idx)
-          self.result[self.alphabet.get_index_by_symbol(f"C_({i - 1},{i},{i + 1})")].append(idx)
+          self.result[self.alphabet.get_index_by_symbol(f"C{i - 1},{i},{i}")]    .append(idx)
+          self.result[self.alphabet.get_index_by_symbol(f"C{i - 1},{i},{i + 1}")].append(idx)
         for j in range(i, N + 2):
-          self.result[idx].append(self.alphabet.get_index_by_symbol(f"B_({i},{j},{k})"))
+          self.result[idx].append(self.alphabet.get_index_by_symbol(f"B{i},{j},{k}"))
       elif symbol_type == 'B':
-        self.result[idx].append(self.alphabet.get_index_by_symbol(f"C_({i},{j},{k})"))
+        self.result[idx].append(self.alphabet.get_index_by_symbol(f"C{i},{j},{k}"))
       elif symbol_type == 'C':
         if j > i + 1 and i + 1 < N:
           if k + 1 <= N:
-            self.result[idx].append(self.alphabet.get_index_by_symbol(f"B_({i + 1},{j},{k + 1})"))
+            self.result[idx].append(self.alphabet.get_index_by_symbol(f"B{i + 1},{j},{k + 1}"))
           if i + 1 < k:
-            self.result[idx].append(self.alphabet.get_index_by_symbol(f"C_({i + 1},{j},{k})"))
+            self.result[idx].append(self.alphabet.get_index_by_symbol(f"C{i + 1},{j},{k}"))
 
 
 class IndependencyRelation(AbstractRelation):
