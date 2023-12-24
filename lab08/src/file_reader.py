@@ -1,5 +1,5 @@
 import os
-from parser import InputParser
+import numpy as np
 
 
 class FileReader:
@@ -9,14 +9,14 @@ class FileReader:
       raise ValueError("File not found.")
 
     with open(path) as file:
-      alphabet = cls.__clean_line(file.readline()).split(',')
-      word     = cls.__clean_line(file.readline()).split(',')
+      N = int(cls.__clean_line(file.readline()))
 
-      expressions: tuple[str, list[str]] = []
-      for line in file:
-        expressions.append(InputParser.parse_line(line))
+      matrix: np.ndarray = np.empty((N, N + 1), dtype=np.float64)
+      for j, line in enumerate(file):
+        for i, value in enumerate(map(lambda v: float(v), line.split(' '))):
+          matrix[i, j] = value
 
-      return alphabet, word, expressions
+      return N, matrix
 
   @classmethod
   def __clean_line(cls, line: str) -> str:

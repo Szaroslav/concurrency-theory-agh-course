@@ -19,15 +19,14 @@ if __name__ == "__main__":
 
   print(test_filename)
 
-  alphabet = MatrixAlphabet(3)
-  alphabet.build()
-  print(alphabet[18])
-  # print(alphabet)
+  # Read input file, first line is number of variables (height of matrix).
+  # The rest are columns of matrix, the last one column is column of values.
+  N, matrix = FileReader.read(os.path.join(PATH_DATA, f"{test_filename}.txt"))
+  print(matrix)
 
-  # # Read input file, first line is an alphabet, second one a word, rest are expressions.
-  # # The word is also converted to integer list.
-  # alphabet, word, expressions = FileReader.read(os.path.join(PATH_DATA, f"{test_filename}.txt"))
-  # word_int = list(map(lambda letter: ord(letter) - ord('a'), word))
+  alphabet = MatrixAlphabet(N)
+  alphabet.build()
+  print(alphabet)
 
   # Create and print dependency relation (D).
   dependency_relation = DependencyRelation(alphabet)
