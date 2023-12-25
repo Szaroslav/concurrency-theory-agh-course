@@ -3,16 +3,9 @@ package com.szaredko.gaussian;
 public class COperation extends Operation {
     private final int j;
 
-    public COperation(
-        int i,
-        int j,
-        int k,
-        double[][] matrix,
-        double[][] mMatrix,
-        double[][] nMatrix
-    ) {
-        super(i, k, matrix, mMatrix, nMatrix);
-        this.j = j;
+    public COperation(int i, int j, int k) {
+        super(i, k);
+        this.j = j - 1;
     }
 
     @Override
