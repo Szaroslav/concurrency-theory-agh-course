@@ -25,10 +25,9 @@ public class Main {
         eliminateGauss(operations);
         finishElimination();
 
-        for(double[] m : matrix){
-            System.out.println(Arrays.toString(m));
+        for(double[] row : matrix) {
+            System.out.println(Arrays.toString(row));
         }
-
     }
 
     private static void initOperations(List<List<Operation>> operations) {

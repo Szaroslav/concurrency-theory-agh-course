@@ -8,6 +8,7 @@ import com.szaredko.gaussian.operation.Operation;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -94,6 +95,27 @@ public class File {
             }
 
             return matrix;
+        }
+    }
+
+    public static void writeOutput(double[][] resultMatrix) throws IOException {
+        String outputPath = Objects.requireNonNull(File.class.getClassLoader()
+                .getResource("output.txt"))
+            .getPath();
+        if (Objects.equals(outputPath, "")) {
+            throw new FileNotFoundException("Failed to create an output file.");
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+            for (double[] row : resultMatrix) {
+                StringBuilder builder = new StringBuilder();
+                for (double value : row) {
+                    builder.append(value + " ");
+                }
+
+                String rowString = builder.substring(0, builder.length() - 1).toString() + "\n";
+                writer.write(rowString);
+            }
         }
     }
 }
