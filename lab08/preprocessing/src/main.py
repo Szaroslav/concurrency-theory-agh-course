@@ -14,7 +14,7 @@ if __name__ == "__main__":
   PATH_GAUSSIAN  = os.path.join(PATH, "../../gaussian-elimination")
   TEST_FILENAMES = [ "test1", "test2" ]
 
-  test_filename = "test1"
+  test_filename = "test"
   if len(sys.argv) > 1:
     test_filename = sys.argv[1]
 
