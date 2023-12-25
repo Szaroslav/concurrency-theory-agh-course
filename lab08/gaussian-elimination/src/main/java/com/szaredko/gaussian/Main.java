@@ -1,6 +1,7 @@
 package com.szaredko.gaussian;
 
-import java.io.FileNotFoundException;
+import com.szaredko.gaussian.operation.Operation;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;

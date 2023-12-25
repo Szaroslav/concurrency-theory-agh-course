@@ -1,5 +1,10 @@
 package com.szaredko.gaussian;
 
+import com.szaredko.gaussian.operation.AOperation;
+import com.szaredko.gaussian.operation.BOperation;
+import com.szaredko.gaussian.operation.COperation;
+import com.szaredko.gaussian.operation.Operation;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

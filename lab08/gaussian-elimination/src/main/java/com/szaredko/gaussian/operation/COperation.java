@@ -1,4 +1,4 @@
-package com.szaredko.gaussian;
+package com.szaredko.gaussian.operation;
 
 public class COperation extends Operation {
     private final int j;

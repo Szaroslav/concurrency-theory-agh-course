@@ -1,4 +1,4 @@
-package com.szaredko.gaussian;
+package com.szaredko.gaussian.operation;
 
 import java.util.concurrent.Callable;
 import lombok.Setter;

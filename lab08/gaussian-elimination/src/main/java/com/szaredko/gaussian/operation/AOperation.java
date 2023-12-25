@@ -1,4 +1,4 @@
-package com.szaredko.gaussian;
+package com.szaredko.gaussian.operation;
 
 public class AOperation extends Operation {
     public AOperation(int i, int k) {
