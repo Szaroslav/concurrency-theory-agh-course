@@ -1,21 +1,6 @@
 # Gaussian elimination
 Home assignment 3
 
-## How to run
-1. Be in the root directory (`lab08`).
-2. Run*:
-  ```bash
-  ./run.sh
-  ```
-  _*If you cannot run the script, grant an execution permission:_
-  ```bash
-  chmod +x ./run.sh
-  ```
-
-## Description
-This project extends project from laboratory 6. Presents how concurrent Gaussian elimination alghorithm may be grouped and run concurrently.
-
-
 ##### `main.py`
 ```py
 import os
